@@ -2,34 +2,82 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack — Incidents</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="animals.html">Animals</a>
+        <a href="habitats.html">Habitats</a>
+        <a href="species.html">Species</a>
+        <a href="programs.html">Programs</a>
+        <a class="active" href="incidents.html">Incidents</a>
+      </div>
+    </nav>
 
-  <body class="page-data">
-    <header class="topbar-flat">
-      <a class="back" href="../dashboard.html">← Dashboard</a>
-      <h1>Incidents</h1>
-    </header>
+    <main class="page">
+      <div class="card">
+        <div class="stack">
+          <h2>Incidents</h2>
+          <button id="newIncident" class="btn danger">+ Log Incident</button>
+        </div>
+        <div class="space"></div>
 
-    <main class="data-container">
-      <table class="table" id="incidentTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Animal</th>
-            <th>Habitat</th>
-            <th>Severity</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <table class="table" id="incidentTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Animal ID</th>
+              <th>Habitat ID</th>
+              <th>Severity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </main>
 
-    <script src="../js/incidents.js"></script>
+    <!-- Add Incident Modal -->
+    <div id="incidentModal" class="modal">
+      <div class="modal-content">
+        <h3>Log Incident</h3>
+        <div class="form-row"><label>Type</label><input id="i_type" /></div>
+        <div class="form-row">
+          <label>Date</label><input id="i_date" type="date" />
+        </div>
+        <div class="form-row">
+          <label>Animal ID</label><input id="i_animal" type="number" />
+        </div>
+        <div class="form-row">
+          <label>Habitat ID</label><input id="i_habitat" type="number" />
+        </div>
+        <div class="form-row">
+          <label>Location</label><input id="i_location" />
+        </div>
+        <div class="form-row">
+          <label>Description</label><input id="i_desc" />
+        </div>
+        <div class="form-row">
+          <label>Severity</label>
+          <select id="i_severity">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button id="cancelIncident" class="btn ghost">Cancel</button>
+          <button id="saveIncident" class="btn danger">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../js/incidents.js"></script>
   </body>
 </html>

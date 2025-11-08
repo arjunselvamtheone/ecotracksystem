@@ -2,92 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack — Programs</title>
     <link rel="stylesheet" href="../css/style.css" />
-
-    <style>
-      .modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.45);
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-      }
-      .modal-content {
-        background: #fff;
-        padding: 1.5rem;
-        border-radius: 10px;
-        width: 350px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .modal-content input,
-      select {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
-    </style>
   </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="animals.html">Animals</a>
+        <a href="habitats.html">Habitats</a>
+        <a href="species.html">Species</a>
+        <a class="active" href="programs.html">Programs</a>
+        <a href="incidents.html">Incidents</a>
+      </div>
+    </nav>
 
-  <body class="page-data">
-    <header class="topbar-flat">
-      <a class="back" href="../dashboard.html">← Dashboard</a>
-      <h1>Programs</h1>
-      <button id="newProgram" class="btn primary">+ Add Program</button>
-    </header>
+    <main class="page">
+      <div class="card">
+        <div class="stack">
+          <h2>Conservation Programs</h2>
+          <button id="newProgram" class="btn primary">+ New Program</button>
+        </div>
+        <div class="space"></div>
 
-    <main class="data-container">
-      <table class="table" id="programTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Habitat</th>
-            <th>Start</th>
-            <th>Status</th>
-            <th>Funding %</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <table class="table" id="programTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Habitat</th>
+              <th>Start</th>
+              <th>Status</th>
+              <th>Funding %</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </main>
 
-    <!-- ADD PROGRAM MODAL -->
+    <!-- Add Program Modal -->
     <div id="programModal" class="modal">
       <div class="modal-content">
-        <h3>Add New Program</h3>
-
-        <label>Name</label>
-        <input id="p_name" type="text" />
-
-        <label>Habitat ID</label>
-        <input id="p_habitat" type="number" />
-
-        <label>Start Date</label>
-        <input id="p_start" type="date" />
-
-        <label>Status</label>
-        <select id="p_status">
-          <option value="Active">Active</option>
-          <option value="Paused">Paused</option>
-          <option value="Completed">Completed</option>
-        </select>
-
-        <label>Funding %</label>
-        <input id="p_funding" type="number" placeholder="0 - 100" />
-
-        <button class="btn primary" id="saveProgram">Save</button>
-        <button class="btn danger" id="cancelProgram">Cancel</button>
+        <h3>Add Program</h3>
+        <div class="form-row"><label>Name</label><input id="p_name" /></div>
+        <div class="form-row">
+          <label>Habitat ID</label><input id="p_habitat" type="number" />
+        </div>
+        <div class="form-row">
+          <label>Start</label><input id="p_start" type="date" />
+        </div>
+        <div class="form-row">
+          <label>Status</label>
+          <select id="p_status">
+            <option>Active</option>
+            <option>Paused</option>
+            <option>Completed</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Funding %</label
+          ><input id="p_funding" type="number" value="0" />
+        </div>
+        <div class="modal-actions">
+          <button id="cancelProgram" class="btn ghost">Cancel</button>
+          <button id="saveProgram" class="btn primary">Save</button>
+        </div>
       </div>
     </div>
 
-    <script src="../js/programs.js"></script>
+    <script type="module" src="../js/programs.js"></script>
   </body>
 </html>

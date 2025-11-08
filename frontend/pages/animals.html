@@ -2,94 +2,80 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack — Animals</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <style>
-      .modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.45);
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-      }
-      .modal-content {
-        background: #fff;
-        padding: 1.5rem;
-        border-radius: 10px;
-        width: 350px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .modal-content input,
-      select {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
-    </style>
   </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a href="../dashboard.html">Dashboard</a>
+        <a class="active" href="animals.html">Animals</a>
+        <a href="habitats.html">Habitats</a>
+        <a href="species.html">Species</a>
+        <a href="programs.html">Programs</a>
+        <a href="incidents.html">Incidents</a>
+      </div>
+    </nav>
 
-  <body class="page-data">
-    <header class="topbar-flat">
-      <a class="back" href="../dashboard.html">← Dashboard</a>
-      <h1>Animals</h1>
-      <button id="newAnimal" class="btn primary">+ Add Animal</button>
-    </header>
+    <main class="page">
+      <div class="card">
+        <div class="stack">
+          <h2>Animals</h2>
+          <button id="newAnimal" class="btn primary">+ Add Animal</button>
+        </div>
+        <div class="space"></div>
 
-    <main class="data-container">
-      <table class="table" id="animalsTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Species</th>
-            <th>Sex</th>
-            <th>DOB</th>
-            <th>Health</th>
-            <th>Habitat</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <table class="table" id="animalsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Species</th>
+              <th>Sex</th>
+              <th>DOB</th>
+              <th>Health</th>
+              <th>Habitat</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </main>
 
-    <!-- ✅ ADD ANIMAL MODAL -->
+    <!-- Add Animal Modal -->
     <div id="addAnimalModal" class="modal">
       <div class="modal-content">
-        <h3>Add New Animal</h3>
-
-        <label>Name</label>
-        <input id="add_name" type="text" />
-
-        <label>Species ID</label>
-        <input id="add_species" type="number" />
-
-        <label>Sex</label>
-        <select id="add_sex">
-          <option value="M">Male</option>
-          <option value="F">Female</option>
-        </select>
-
-        <label>DOB</label>
-        <input id="add_dob" type="date" />
-
-        <label>Health Status</label>
-        <input id="add_health" type="text" />
-
-        <label>Habitat ID</label>
-        <input id="add_habitat" type="number" />
-
-        <button id="saveAnimal" class="btn primary">Save</button>
-        <button id="cancelAdd" class="btn danger">Cancel</button>
+        <h3>Add Animal</h3>
+        <div class="form-row"><label>Name</label><input id="add_name" /></div>
+        <div class="form-row">
+          <label>Species ID</label><input id="add_species" type="number" />
+        </div>
+        <div class="form-row">
+          <label>Sex</label>
+          <select id="add_sex">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>DOB</label><input id="add_dob" type="date" />
+        </div>
+        <div class="form-row">
+          <label>Health</label><input id="add_health" />
+        </div>
+        <div class="form-row">
+          <label>Habitat ID</label><input id="add_habitat" type="number" />
+        </div>
+        <div class="modal-actions">
+          <button id="cancelAdd" class="btn ghost">Cancel</button>
+          <button id="saveAnimal" class="btn primary">Save</button>
+        </div>
       </div>
     </div>
 
-    <script src="../js/animals.js"></script>
+    <script type="module" src="../js/animals.js"></script>
   </body>
 </html>

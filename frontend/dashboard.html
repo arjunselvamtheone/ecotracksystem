@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoTrack — Dashboard</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>EcoTrack — Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a class="active" href="dashboard.html">Dashboard</a>
+        <a href="pages/animals.html">Animals</a>
+        <a href="pages/habitats.html">Habitats</a>
+        <a href="pages/species.html">Species</a>
+        <a href="pages/programs.html">Programs</a>
+        <a href="pages/incidents.html">Incidents</a>
+      </div>
+    </nav>
 
-<body class="page-dashboard">
-  <header class="topbar">
-    <h2>Welcome, <span id="username"></span></h2>
-    <button id="logoutBtn" class="btn danger">Logout</button>
-  </header>
+    <main class="page">
+      <div class="card">
+        <h2>Overview</h2>
+        <p class="muted">Real-time monitoring across wildlife ecosystems.</p>
+      </div>
 
-  <main class="dashboard-container">
-    <div class="stats">
-      <div class="stat-card">Species <span id="cSpecies"></span></div>
-      <div class="stat-card">Programs <span id="cPrograms"></span></div>
-      <div class="stat-card">Incidents <span id="cIncidents"></span></div>
-    </div>
+      <div class="card">
+        <div class="stack">
+          <div class="btn ghost">Species: <b id="cSpecies">—</b></div>
+          <div class="btn ghost">Programs: <b id="cPrograms">—</b></div>
+          <div class="btn ghost">Incidents: <b id="cIncidents">—</b></div>
+        </div>
+        <div class="space"></div>
+        <div class="stack">
+          <button
+            class="btn primary"
+            onclick="location.href='pages/animals.html'"
+          >
+            Manage Animals
+          </button>
+          <button
+            class="btn primary"
+            onclick="location.href='pages/programs.html'"
+          >
+            Conservation Programs
+          </button>
+          <button
+            class="btn danger"
+            onclick="location.href='pages/incidents.html'"
+          >
+            Report Incident
+          </button>
+        </div>
+      </div>
+    </main>
 
-    <div class="actions">
-      <button id="btnNewAnimal" class="btn primary">Animals</button>
-      <button id="btnNewProgram" class="btn primary">Programs</button>
-      <button id="btnNewIncident" class="btn danger">Report Incident</button>
-    </div>
-  </main>
-
-  <script src="js/dashboard.js"></script>
-</body>
+    <script type="module" src="js/dashboard.js"></script>
+  </body>
 </html>

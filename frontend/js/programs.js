@@ -1,120 +1,97 @@
-// public/js/programs.js
+import { api } from "./api.js";
+import { $, render, openModal, closeModal, toast } from "./ui.js";
 
-const API = "http://localhost:5000/api/programs";
-const tbody = document.querySelector("#programTable tbody");
+const tbody = $("#programTable tbody");
 
-/**************** LOAD PROGRAMS *****************/
-async function loadPrograms() {
-  try {
-    const res = await fetch(API);
-    const result = await res.json();
-
-    if (!res.ok) {
-      tbody.innerHTML = `<tr><td colspan="8">❌ ${
-        result.message || "Server error"
-      }</td></tr>`;
-      return;
-    }
-
-    const programs = Array.isArray(result.data) ? result.data : [];
-
-    tbody.innerHTML = programs
+async function load() {
+  const r = await api("/programs");
+  if (r.status !== 200)
+    return render(
+      tbody,
+      `<tr><td colspan="99" class="center">❌ ${r.message}</td></tr>`
+    );
+  render(
+    tbody,
+    r.data
       .map(
         (p) => `
-      <tr data-id="${p.program_id}">
-        <td>${p.program_id}</td>
-        <td><input value="${p.name}" class="name"></td>
-        <td><input value="${p.habitat_id}" class="habitat_id"></td>
-        <td><input value="${p.start_date?.substring(
-          0,
-          10
-        )}" type="date" class="start_date"></td>
-        <td><input value="${p.status}" class="status"></td>
-        <td><input value="${
-          p.funding_utilization
-        }" type="number" class="funding"></td>
-
-        <td><button class="btn tiny update">Update</button></td>
-        <td><button class="btn tiny danger delete">Delete</button></td>
-      </tr>`
+    <tr data-id="${p.program_id}">
+      <td>${p.program_id}</td>
+      <td><input class="name" value="${p.name ?? ""}"></td>
+      <td><input class="habitat_id" type="number" value="${
+        p.habitat_id ?? ""
+      }"></td>
+      <td><input class="start_date" type="date" value="${(
+        p.start_date || ""
+      ).substring(0, 10)}"></td>
+      <td>
+        <select class="status">
+          ${["Active", "Paused", "Completed"]
+            .map(
+              (s) => `
+            <option value="${s}" ${
+                p.status === s ? "selected" : ""
+              }>${s}</option>
+          `
+            )
+            .join("")}
+        </select>
+      </td>
+      <td><input class="funding" type="number" value="${
+        p.funding_utilization ?? 0
+      }"></td>
+      <td>
+        <button class="btn ghost update">Update</button>
+        <button class="btn danger delete">Delete</button>
+      </td>
+    </tr>
+  `
       )
-      .join("");
-  } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="8">❌ Cannot connect to backend</td></tr>`;
-  }
+      .join("")
+  );
 }
 
-/**************** ADD PROGRAM (POST) *****************/
-document.getElementById("newProgram").addEventListener("click", () => {
-  document.getElementById("programModal").style.display = "flex";
-});
-
-document.getElementById("cancelProgram").addEventListener("click", () => {
-  document.getElementById("programModal").style.display = "none";
-});
-
-document.getElementById("saveProgram").addEventListener("click", async () => {
-  const body = {
-    name: document.getElementById("p_name").value,
-    habitat_id: document.getElementById("p_habitat").value,
-    start_date: document.getElementById("p_start").value,
-    status: document.getElementById("p_status").value,
-    funding_utilization: document.getElementById("p_funding").value,
-  };
-
-  const res = await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const result = await res.json();
-  alert(result.message || result.error);
-
-  document.getElementById("programModal").style.display = "none";
-  loadPrograms();
-});
-
-/**************** UPDATE PROGRAM (PUT) *****************/
 document.addEventListener("click", async (e) => {
-  if (!e.target.classList.contains("update")) return;
-
   const row = e.target.closest("tr");
+  if (e.target.id === "newProgram") return openModal("programModal");
+  if (e.target.id === "cancelProgram") return closeModal("programModal");
+
+  if (e.target.id === "saveProgram") {
+    const body = {
+      name: $("#p_name").value.trim(),
+      habitat_id: +$("#p_habitat").value,
+      start_date: $("#p_start").value,
+      status: $("#p_status").value,
+      funding_utilization: +$("#p_funding").value || 0,
+    };
+    const r = await api("/programs", "POST", body);
+    toast(r.message);
+    closeModal("programModal");
+    return load();
+  }
+
+  if (!row) return;
   const id = row.dataset.id;
 
-  const body = {
-    name: row.querySelector(".name").value,
-    habitat_id: row.querySelector(".habitat_id").value,
-    start_date: row.querySelector(".start_date").value,
-    status: row.querySelector(".status").value,
-    funding_utilization: row.querySelector(".funding").value,
-  };
+  if (e.target.classList.contains("update")) {
+    const body = {
+      name: $(".name", row).value.trim(),
+      habitat_id: +$(".habitat_id", row).value,
+      start_date: $(".start_date", row).value,
+      status: $(".status", row).value,
+      funding_utilization: +$(".funding", row).value || 0,
+    };
+    const r = await api(`/programs/${id}`, "PUT", body);
+    toast(r.message);
+    return load();
+  }
 
-  const res = await fetch(`${API}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const result = await res.json();
-  alert(result.message || result.error);
-
-  loadPrograms();
+  if (e.target.classList.contains("delete")) {
+    if (!confirm("Delete program?")) return;
+    const r = await api(`/programs/${id}`, "DELETE");
+    toast(r.message);
+    return load();
+  }
 });
 
-/**************** DELETE PROGRAM (DELETE) *****************/
-document.addEventListener("click", async (e) => {
-  if (!e.target.classList.contains("delete")) return;
-
-  const id = e.target.closest("tr").dataset.id;
-
-  if (!confirm("Delete this program?")) return;
-
-  const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-  const result = await res.json();
-
-  alert(result.message || result.error);
-  loadPrograms();
-});
-
-loadPrograms();
+load();

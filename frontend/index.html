@@ -2,54 +2,51 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack — Login</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a href="index.html" class="active">Login</a>
+        <a href="signup.html">Sign up</a>
+      </div>
+    </nav>
 
-  <body class="page-auth">
-    <main class="auth-grid">
-      <section class="auth-card">
-        <div class="brand">
-          <h1>EcoTrack</h1>
-          <p class="muted">Wildlife Monitoring & Conservation</p>
-        </div>
-
-        <form id="loginForm" class="form" autocomplete="off">
+    <main class="page">
+      <div class="card" style="max-width: 480px; margin: 0 auto">
+        <h2>Welcome back</h2>
+        <p class="muted">Use demo credentials to continue</p>
+        <div class="space"></div>
+        <form id="loginForm">
           <div class="form-row">
             <label>Email</label>
             <input
               name="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder="demo@ecotrack.org"
               required
             />
           </div>
-
           <div class="form-row">
             <label>Password</label>
             <input
               name="password"
               type="password"
-              placeholder="••••••"
+              placeholder="demo1234"
               required
             />
           </div>
-
-          <button class="btn primary" type="submit">Login</button>
-          <span id="loginMsg" class="status-msg"></span>
+          <div class="stack">
+            <button class="btn primary" type="submit">Sign in</button>
+            <a class="btn ghost" href="signup.html">Create account</a>
+          </div>
+          <div id="loginMsg" class="muted" style="margin-top: 10px"></div>
         </form>
-      </section>
-
-      <aside class="auth-visual">
-        <h2>Protect Wildlife 🐘</h2>
-        <p>
-          Monitor real-time animal tracking, habitat incidents, conservation
-          programs.
-        </p>
-      </aside>
+      </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

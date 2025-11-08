@@ -2,34 +2,65 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack — Habitats</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="animals.html">Animals</a>
+        <a class="active" href="habitats.html">Habitats</a>
+        <a href="species.html">Species</a>
+        <a href="programs.html">Programs</a>
+        <a href="incidents.html">Incidents</a>
+      </div>
+    </nav>
 
-  <body class="page-data">
-    <header class="topbar-flat">
-      <a class="back" href="../dashboard.html">← Dashboard</a>
-      <h1>Habitats</h1>
-      <button id="newHabitat" class="btn primary">+ Add Habitat</button>
-    </header>
+    <main class="page">
+      <div class="card">
+        <div class="stack">
+          <h2>Habitats</h2>
+          <button id="newHabitat" class="btn primary">+ Add Habitat</button>
+        </div>
+        <div class="space"></div>
 
-    <main class="data-container">
-      <table class="table" id="habitatTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Area</th>
-            <th>Ecosystem</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <table class="table" id="habitatTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Area (sq km)</th>
+              <th>Ecosystem</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </main>
 
-    <script src="../js/habitats.js"></script>
+    <!-- Add Habitat Modal -->
+    <div id="addHabitatModal" class="modal">
+      <div class="modal-content">
+        <h3>Add Habitat</h3>
+        <div class="form-row"><label>Name</label><input id="h_name" /></div>
+        <div class="form-row">
+          <label>Location</label><input id="h_location" />
+        </div>
+        <div class="form-row">
+          <label>Area (sq km)</label><input id="h_area" type="number" />
+        </div>
+        <div class="form-row"><label>Ecosystem</label><input id="h_eco" /></div>
+        <div class="modal-actions">
+          <button id="cancelHabitat" class="btn ghost">Cancel</button>
+          <button id="saveHabitat" class="btn primary">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../js/habitats.js"></script>
   </body>
 </html>

@@ -1,102 +1,93 @@
-const API = "http://localhost:5000/api/animals";
+import { api } from "./api.js";
+import { $, $$, openModal, closeModal, render, toast } from "./ui.js";
 
-async function loadAnimals() {
-  const tbody = document.querySelector("#animalsTable tbody");
-  tbody.innerHTML = `<tr><td colspan="9">Loading...</td></tr>`;
+const tbody = $("#animalsTable tbody");
 
-  const res = await fetch(API);
-  const json = await res.json();
-
-  tbody.innerHTML = json.data
-    .map(
-      (a) => `
-      <tr data-id="${a.animal_id}">
-        <td>${a.animal_id}</td>
-        <td><input value="${a.name}" class="name"></td>
-        <td><input value="${a.species_id}" class="species_id"></td>
-        <td><input value="${a.sex}" class="sex"></td>
-        <td><input value="${a.date_of_birth?.substring(
-          0,
-          10
-        )}" type="date" class="date_of_birth"></td>
-        <td><input value="${a.health_status}" class="health_status"></td>
-        <td><input value="${a.habitat_id ?? ""}" class="habitat_id"></td>
-        <td><button class="btn tiny update">Update</button></td>
-        <td><button class="btn tiny danger delete">Delete</button></td>
-      </tr>
-    `
-    )
-    .join("");
+async function load() {
+  const res = await api("/animals");
+  if (res.status !== 200)
+    return render(
+      tbody,
+      `<tr><td colspan="99" class="center">❌ ${res.message}</td></tr>`
+    );
+  render(
+    tbody,
+    res.data
+      .map(
+        (a) => `
+    <tr data-id="${a.animal_id}">
+      <td>${a.animal_id}</td>
+      <td><input class="name" value="${a.name ?? ""}"></td>
+      <td><input class="species_id" type="number" value="${
+        a.species_id ?? ""
+      }"></td>
+      <td>
+        <select class="sex">
+          <option value="M" ${a.sex === "M" ? "selected" : ""}>M</option>
+          <option value="F" ${a.sex === "F" ? "selected" : ""}>F</option>
+        </select>
+      </td>
+      <td><input class="dob" type="date" value="${(
+        a.date_of_birth || ""
+      ).substring(0, 10)}"></td>
+      <td><input class="health" value="${a.health_status ?? ""}"></td>
+      <td><input class="habitat_id" type="number" value="${
+        a.habitat_id ?? ""
+      }"></td>
+      <td><button class="btn ghost update">Update</button></td>
+      <td><button class="btn danger delete">Delete</button></td>
+    </tr>
+  `
+      )
+      .join("")
+  );
 }
 
-/************* CREATE New Animal **************/
-document.getElementById("newAnimal").addEventListener("click", () => {
-  document.getElementById("addAnimalModal").style.display = "flex";
-});
-
-document.getElementById("cancelAdd").addEventListener("click", () => {
-  document.getElementById("addAnimalModal").style.display = "none";
-});
-
-document.getElementById("saveAnimal").addEventListener("click", async () => {
-  const body = {
-    name: document.getElementById("add_name").value,
-    species_id: document.getElementById("add_species").value,
-    sex: document.getElementById("add_sex").value,
-    date_of_birth: document.getElementById("add_dob").value,
-    health_status: document.getElementById("add_health").value,
-    habitat_id: document.getElementById("add_habitat").value || null,
-  };
-
-  const res = await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const json = await res.json();
-  alert(json.message || json.error);
-
-  document.getElementById("addAnimalModal").style.display = "none";
-  loadAnimals();
-});
-
-/************* UPDATE **************/
 document.addEventListener("click", async (e) => {
-  if (!e.target.classList.contains("update")) return;
-
   const row = e.target.closest("tr");
+  if (e.target.id === "newAnimal") return openModal("addAnimalModal");
+  if (e.target.id === "cancelAdd") return closeModal("addAnimalModal");
+
+  if (e.target.id === "saveAnimal") {
+    const body = {
+      name: $("#add_name").value.trim(),
+      species_id: +$("#add_species").value,
+      sex: $("#add_sex").value,
+      date_of_birth: $("#add_dob").value,
+      health_status: $("#add_health").value.trim(),
+      habitat_id: $("#add_habitat").value ? +$("#add_habitat").value : null,
+    };
+    const r = await api("/animals", "POST", body);
+    toast(r.message);
+    closeModal("addAnimalModal");
+    return load();
+  }
+
+  if (!row) return;
   const id = row.dataset.id;
 
-  const body = {
-    name: row.querySelector(".name").value,
-    species_id: row.querySelector(".species_id").value,
-    sex: row.querySelector(".sex").value,
-    date_of_birth: row.querySelector(".date_of_birth").value,
-    health_status: row.querySelector(".health_status").value,
-    habitat_id: row.querySelector(".habitat_id").value || null,
-  };
+  if (e.target.classList.contains("update")) {
+    const body = {
+      name: $(".name", row).value.trim(),
+      species_id: +$(".species_id", row).value,
+      sex: $(".sex", row).value,
+      date_of_birth: $(".dob", row).value,
+      health_status: $(".health", row).value.trim(),
+      habitat_id: $(".habitat_id", row).value
+        ? +$(".habitat_id", row).value
+        : null,
+    };
+    const r = await api(`/animals/${id}`, "PUT", body);
+    toast(r.message);
+    return load();
+  }
 
-  const res = await fetch(`${API}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const json = await res.json();
-  alert(json.message || json.error);
-  loadAnimals();
+  if (e.target.classList.contains("delete")) {
+    if (!confirm("Delete this animal?")) return;
+    const r = await api(`/animals/${id}`, "DELETE");
+    toast(r.message);
+    return load();
+  }
 });
 
-/************* DELETE **************/
-document.addEventListener("click", async (e) => {
-  if (!e.target.classList.contains("delete")) return;
-
-  const id = e.target.closest("tr").dataset.id;
-  if (!confirm("Delete this animal?")) return;
-
-  await fetch(`${API}/${id}`, { method: "DELETE" });
-  loadAnimals();
-});
-
-loadAnimals();
+load();

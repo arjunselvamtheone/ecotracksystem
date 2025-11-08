@@ -2,34 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EcoTrack — Species</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
+  <body>
+    <nav>
+      <h1>E C O T R A C K</h1>
+      <div class="links">
+        <a href="../dashboard.html">Dashboard</a>
+        <a href="animals.html">Animals</a>
+        <a href="habitats.html">Habitats</a>
+        <a class="active" href="species.html">Species</a>
+        <a href="programs.html">Programs</a>
+        <a href="incidents.html">Incidents</a>
+      </div>
+    </nav>
 
-  <body class="page-data">
-    <header class="topbar-flat">
-      <a class="back" href="../dashboard.html">← Dashboard</a>
-      <h1>Species</h1>
-    </header>
+    <main class="page">
+      <div class="card">
+        <div class="stack">
+          <h2>Species</h2>
+          <button id="newSpecies" class="btn primary">+ Add Species</button>
+        </div>
+        <div class="space"></div>
 
-    <main class="data-container">
-      <table class="table" id="speciesTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Threat Level</th>
-            <th>Population</th>
-            <th>Trend</th>
-            <th>Habitat</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <table class="table" id="speciesTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Threat</th>
+              <th>Population</th>
+              <th>Trend</th>
+              <th>Habitat ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </main>
 
-    <script src="../js/species.js"></script>
+    <!-- Add Species Modal -->
+    <div id="addSpeciesModal" class="modal">
+      <div class="modal-content">
+        <h3>Add Species</h3>
+        <div class="form-row"><label>Name</label><input id="s_name" /></div>
+        <div class="form-row">
+          <label>Threat</label>
+          <select id="s_threat">
+            <option>Critical</option>
+            <option>Endangered</option>
+            <option>Vulnerable</option>
+            <option>Near Threatened</option>
+            <option>Least Concern</option>
+            <option>Safe</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Population</label><input id="s_pop" type="number" value="0" />
+        </div>
+        <div class="form-row">
+          <label>Trend</label>
+          <select id="s_trend">
+            <option>Declining</option>
+            <option>Stable</option>
+            <option>Increasing</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Habitat ID</label><input id="s_habitat" type="number" />
+        </div>
+        <div class="modal-actions">
+          <button id="cancelSpecies" class="btn ghost">Cancel</button>
+          <button id="saveSpecies" class="btn primary">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../js/species.js"></script>
   </body>
 </html>
