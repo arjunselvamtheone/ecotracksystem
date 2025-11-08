@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoTrack — Sign up</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* --- EcoTrack Signup Enhancements --- */
+    body.page-auth {
+      background: linear-gradient(120deg, #e7f5ed 0%, #d8f0f4 100%);
+      font-family: 'Segoe UI', sans-serif;
+      color: #234e36;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #fff;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      width: 80%;
+      max-width: 950px;
+      animation: fadeIn 0.6s ease-in;
+    }
+    .auth-card {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .brand.small {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .brand.small h1 {
+      color: #2a5d3d;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+    .leaf {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #3eb47f, #64d0b1);
+      border-radius: 50% 0 50% 50%;
+      transform: rotate(-45deg);
+    }
+
+    .form-row {
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-row label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      color: #2c5c41;
+    }
+    .form-row input {
+      padding: 0.7rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid #cfe7d7;
+      background: #fafdfb;
+      transition: all 0.2s ease;
+    }
+    .form-row input:focus {
+      border-color: #3eb47f;
+      box-shadow: 0 0 6px rgba(62, 180, 127, 0.25);
+      outline: none;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+    .btn.primary {
+      background: linear-gradient(90deg, #3eb47f, #64d0b1);
+      border: none;
+      color: white;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(62, 180, 127, 0.3);
+    }
+    .link.muted {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #4f6d5b;
+    }
+    .link.muted:hover {
+      color: #3eb47f;
+    }
+
+    #signupMsg {
+      text-align: center;
+      margin-top: 0.8rem;
+      font-weight: 500;
+    }
+
+    .auth-visual {
+      background: linear-gradient(135deg, #d6f4e1 0%, #d5edf4 100%);
+      padding: 3rem 2rem;
+      color: #1f4932;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-visual::after {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 70%);
+      animation: rotateGlow 12s linear infinite;
+    }
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .auth-visual h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #19422e;
+    }
+    .auth-visual p {
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: #315a46;
+      background: rgba(255, 255, 255, 0.4);
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      .auth-grid {
+        grid-template-columns: 1fr;
+      }
+      .auth-visual {
+        display: none;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="page-auth">
+  <main class="auth-grid">
+    <section class="auth-card">
+      <div class="brand small">
+        <div class="leaf"></div>
+        <h1>EcoTrack</h1>
+      </div>
+
+      <form id="signupForm" class="form" autocomplete="off">
+        <div class="form-row">
+          <label for="firstName">First name</label>
+          <input id="firstName" name="firstName" type="text" placeholder="First" required>
+        </div>
+
+        <div class="form-row">
+          <label for="lastName">Last name</label>
+          <input id="lastName" name="lastName" type="text" placeholder="Last" required>
+        </div>
+
+        <div class="form-row">
+          <label for="signupEmail">Email</label>
+          <input id="signupEmail" name="email" type="email" placeholder="you@domain.org" required>
+        </div>
+
+        <div class="form-row">
+          <label for="signupPassword">Password</label>
+          <input id="signupPassword" name="password" type="password" placeholder="Create a strong password" required minlength="8">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Create account</button>
+          <a class="link muted" href="index.html">Already have an account? Sign in</a>
+        </div>
+
+        <div id="signupMsg" class="form-msg"></div>
+      </form>
+    </section>
+
+    <aside class="auth-visual">
+      <h2>Join the Conservation Effort 🌿</h2>
+      <p>
+        Create an account to log sensor data, record incidents, and help monitor
+        wildlife programs across habitats worldwide.
+      </p>
+      <div class="hint">💡 Use your institutional email for faster verification.</div>
+    </aside>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack — Login</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="page-auth">
+    <main class="auth-grid">
+      <section class="auth-card">
+        <div class="brand">
+          <h1>EcoTrack</h1>
+          <p class="muted">Wildlife Monitoring & Conservation</p>
+        </div>
+
+        <form id="loginForm" class="form" autocomplete="off">
+          <div class="form-row">
+            <label>Email</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label>Password</label>
+            <input
+              name="password"
+              type="password"
+              placeholder="••••••"
+              required
+            />
+          </div>
+
+          <button class="btn primary" type="submit">Login</button>
+          <span id="loginMsg" class="status-msg"></span>
+        </form>
+      </section>
+
+      <aside class="auth-visual">
+        <h2>Protect Wildlife 🐘</h2>
+        <p>
+          Monitor real-time animal tracking, habitat incidents, conservation
+          programs.
+        </p>
+      </aside>
+    </main>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

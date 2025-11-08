@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack — Programs</title>
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+      }
+      .modal-content {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 10px;
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .modal-content input,
+      select {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+
+  <body class="page-data">
+    <header class="topbar-flat">
+      <a class="back" href="../dashboard.html">← Dashboard</a>
+      <h1>Programs</h1>
+      <button id="newProgram" class="btn primary">+ Add Program</button>
+    </header>
+
+    <main class="data-container">
+      <table class="table" id="programTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Habitat</th>
+            <th>Start</th>
+            <th>Status</th>
+            <th>Funding %</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </main>
+
+    <!-- ADD PROGRAM MODAL -->
+    <div id="programModal" class="modal">
+      <div class="modal-content">
+        <h3>Add New Program</h3>
+
+        <label>Name</label>
+        <input id="p_name" type="text" />
+
+        <label>Habitat ID</label>
+        <input id="p_habitat" type="number" />
+
+        <label>Start Date</label>
+        <input id="p_start" type="date" />
+
+        <label>Status</label>
+        <select id="p_status">
+          <option value="Active">Active</option>
+          <option value="Paused">Paused</option>
+          <option value="Completed">Completed</option>
+        </select>
+
+        <label>Funding %</label>
+        <input id="p_funding" type="number" placeholder="0 - 100" />
+
+        <button class="btn primary" id="saveProgram">Save</button>
+        <button class="btn danger" id="cancelProgram">Cancel</button>
+      </div>
+    </div>
+
+    <script src="../js/programs.js"></script>
+  </body>
+</html>
